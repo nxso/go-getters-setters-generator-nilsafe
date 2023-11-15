@@ -2,7 +2,7 @@
   "name": "ggsgornil",
 	"displayName": "Go Getters and Setters Generator Nilsafe",
 	"description": "Getter (incl. nilsafe variant) and Setter generator for Go stucts",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"publisher": "nxso",
 	"engines": {
 		"vscode": "^1.66.0"

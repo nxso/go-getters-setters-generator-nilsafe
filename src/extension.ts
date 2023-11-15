@@ -32,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
           continue;
         }
         // all good, lets create getters and setters
-        const values = [...lines[line].matchAll(/(\*?[\w.\[\]])+/g)];
+        const values = [...lines[line].matchAll(/(\*?[\w.\[\]\{\}])+/g)];
         if (values.length >= 2) {
           // Might be a valid line
           const receiver = structName.toLowerCase();
