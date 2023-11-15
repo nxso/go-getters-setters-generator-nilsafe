@@ -36,6 +36,12 @@ None
 
 ## Release Notes
 
+
+### 1.0.3
+- Insert code below the struct declaration instead of EOF
+- `// ## GENERATED - Getters & Setters for 'Invoice' ##` comment added above generated code
+- `// ## END GENERATED - Getters & Setters for 'Invoice' ##` comment added below generated code
+
 ### 1.0.2
 - Added support for nilsafe getters `GetNameOrNil() *string`
 - Added support for imported packages `[]*time.Time`
