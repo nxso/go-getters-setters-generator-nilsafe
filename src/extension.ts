@@ -32,18 +32,18 @@ export function activate(context: vscode.ExtensionContext) {
           continue;
         }
         // all good, lets create getters and setters
-        const values = [...lines[line].matchAll(/(\*?\w)+/g)];
+        const values = [...lines[line].matchAll(/(\*?[\w.\[\]])+/g)];
         if (values.length >= 2) {
           // Might be a valid line
           const receiver = structName.toLowerCase();
           const rawKey = values[0][0];
           const displayKey = rawKey[0].toUpperCase() + rawKey.slice(1);
           const type = values[1][0];
-          const nillableType = type.replace(/\*?(\w+)/, '*$1');
-          const nillableReturn = type.startsWith('*') ? '' : '&';
+          const nillableType = type.replace(/^\*?(\w+)/, '*$1');
+          const nillableReturn = type.startsWith('\*') ||  type.startsWith('\[\]')? '' : '&';
           // push function to getters
           getters.push(`func (${receiver} *${structName}) Get${displayKey}() ${type} ` + `{\n\treturn ${receiver}.${rawKey}\n}`);
-          gettersNillable.push(`func (${receiver} *${structName}) Get${displayKey}OrNil() ${nillableType} ` + `{\n\tif person == nil {\n\t\treturn nil\n\t}\n\treturn ${nillableReturn}${receiver}.${rawKey}\n}`);
+          gettersNillable.push(`func (${receiver} *${structName}) Get${displayKey}OrNil() ${nillableType} ` + `{\n\tif ${receiver} == nil {\n\t\treturn nil\n\t}\n\treturn ${nillableReturn}${receiver}.${rawKey}\n}`);
           // push function to setters
           setters.push(`func (${receiver} *${structName}) Set${displayKey}(${rawKey} ${type}) *${structName} ` + `{\n\t${receiver}.${rawKey} = ${rawKey}\n\treturn ${receiver}\n}`);
         }

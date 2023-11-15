@@ -1,12 +1,14 @@
 # Go getters and setters generator nilsafe (ggsgornil)
 
 A VSCode extension to automatically generate getters (standard + nilsafe methods) and setters for struct fields.
-- GetName() string
-- GetNameOrNil () *string => allows (panic free) optional chaining 
-- SetName(name string) *Struct => allows method chaining
+- `GetName() string`
+- `GetNameOrNil() *string` => allows (panic free) optional chaining 
+- `SetName(name string) *Struct` => allows method chaining
 
 A fork of [ggsg](https://github.com/trythrow/go-getters-setters-generator)
-
+- Added support for nilsafe getters `GetNameOrNil() *string` => additional feature that allows (panic free) optional chaining
+- Added support for imported packages `[]*time.Time` (bug fix)
+- Added support for `[]*Struct` and `[]Struct` fields (bug fix)
 
 ## Features
 
@@ -33,6 +35,11 @@ None at the moment
 None
 
 ## Release Notes
+
+### 1.0.2
+- Added support for nilsafe getters `GetNameOrNil() *string`
+- Added support for imported packages `[]*time.Time`
+- Added support for `[]*Struct` and `[]Struct` fields
 
 ### 1.0.0
 
