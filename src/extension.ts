@@ -40,10 +40,13 @@ export function activate(context: vscode.ExtensionContext) {
           const displayKey = rawKey[0].toUpperCase() + rawKey.slice(1);
           const type = values[1][0];
           const nillableType = type.replace(/^\*?(\w+)/, '*$1');
-          const nillableReturn = type.startsWith('\*') ||  type.startsWith('\[\]')? '' : '&';
+          const nillableReturn = type.startsWith('*') || type.startsWith('[]') ? '' : '&';
           // push function to getters
           getters.push(`func (${receiver} *${structName}) Get${displayKey}() ${type} ` + `{\n\treturn ${receiver}.${rawKey}\n}`);
-          gettersNillable.push(`func (${receiver} *${structName}) Get${displayKey}OrNil() ${nillableType} ` + `{\n\tif ${receiver} == nil {\n\t\treturn nil\n\t}\n\treturn ${nillableReturn}${receiver}.${rawKey}\n}`);
+          gettersNillable.push(
+            `func (${receiver} *${structName}) Get${displayKey}OrNil() ${nillableType} ` +
+              `{\n\tif ${receiver} == nil {\n\t\treturn nil\n\t}\n\treturn ${nillableReturn}${receiver}.${rawKey}\n}`
+          );
           // push function to setters
           setters.push(`func (${receiver} *${structName}) Set${displayKey}(${rawKey} ${type}) *${structName} ` + `{\n\t${receiver}.${rawKey} = ${rawKey}\n\treturn ${receiver}\n}`);
         }
@@ -51,10 +54,10 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     editor?.edit((editBuilder) => {
-      editBuilder.insert(
-        new vscode.Position(editor.document.lineCount + 1, 0),
-        '\n' + getters.join('\n\n') + '\n\n' + gettersNillable.join('\n\n') + '\n\n' + setters.join('\n\n')
-      );
+      const currentSelection = editor.selection;
+      const lineToInsert = currentSelection.end.line + 1; // Insert after the current selection
+
+      editBuilder.insert(new vscode.Position(lineToInsert, 0), '\n' + `// ## GENERATED - Getters & Setters for '${structName}' ##\n` + getters.join('\n\n') + '\n\n' + gettersNillable.join('\n\n') + '\n\n' + setters.join('\n\n') + `\n// ## END GENERATED - Getters & Setters for '${structName}' ##\n\n`);
     });
 
     if (getters.length + gettersNillable.length + setters.length >= 1) {
