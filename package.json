@@ -1,9 +1,9 @@
 {
-  "name": "ggsg",
-	"displayName": "Go Getters and Setters Generator",
-	"description": "Getters and Setters generator for Go stucts",
+  "name": "ggsgornil",
+	"displayName": "Go Getters and Setters Generator Nilsafe",
+	"description": "Getter (incl. nilsafe variant) and Setter generator for Go stucts",
 	"version": "1.0.0",
-	"publisher": "trythrow",
+	"publisher": "nxso",
 	"engines": {
 		"vscode": "^1.66.0"
 	},
@@ -12,19 +12,19 @@
 		"Formatters"
 	],
 	"activationEvents": [
-        "onCommand:ggsg.generateGettersAndSetters"
+        "onCommand:ggsgornil.generateGettersAndSetters"
 	],
 	"repository": 
     {
         "type": "git",
-        "url": "https://github.com/trythrow/go-getters-setters-generator"    
+        "url": "https://github.com/nxso/go-getters-setters-generator-nilsafe"    
     },
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "ggsg.generateGettersAndSetters",
-				"title": "Go: Generate getters and setters"
+				"command": "ggsgornil.generateGettersAndSetters",
+				"title": "Go: Generate getters (standard + nilsafe) + setters"
 			}
 		]
 	},
